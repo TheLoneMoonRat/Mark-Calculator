@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 function App () {
   const [backendData, setBackendData] = useState([{}])
-  const [message, setMessage] = useState('');
+  const [message1, setMessage1] = useState('');
+  const [message2, setMessage2] = useState('');
+  const [message3, setMessage3] = useState('');
 
   useEffect(() => {
     fetch("/api").then(
@@ -13,7 +15,12 @@ function App () {
       }
     )
   })
-  const sendMessageToBackend = () => {
+  const backendwrapper = () => {
+    sendMessageToBackend("1" + message1);
+    sendMessageToBackend("2" + message2);
+    sendMessageToBackend("3" + message3);
+  }
+  const sendMessageToBackend = (message) => {
     fetch('/api/send-message', {
       method: 'POST',
       headers: {
@@ -32,11 +39,23 @@ function App () {
   return (
     <div>
       <div>
-        <button onClick={sendMessageToBackend}>Send Message to Backend</button>
+        <button onClick={backendwrapper}>Send Message to Backend</button>
         <input
           type="text"
-          value={message}
-          onChange={e => setMessage(e.target.value)}
+          value={message1}
+          onChange={e => setMessage1(e.target.value)}
+          placeholder="Enter your message"
+        />
+        <input
+          type="text"
+          value={message2}
+          onChange={e => setMessage2(e.target.value)}
+          placeholder="Enter your message"
+        />
+        <input
+          type="text"
+          value={message3}
+          onChange={e => setMessage3(e.target.value)}
           placeholder="Enter your message"
         />
       </div>
