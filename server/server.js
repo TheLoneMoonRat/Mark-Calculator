@@ -26,14 +26,14 @@ sql.connect(config)
   });
 
 //sending information to client from the sql database
-app.get('/api', (req, res) => {
+app.get('/userdata', (req, res) => {
   sql.connect(config)
   .then(pool => {
     // console.log('Retrieving from the database');
     return pool.request()
       .query(`SELECT mark1, mark2, mark3
               FROM mygrades
-              WHERE studentid IN (21023892);`);
+              WHERE studentid IN ('21023892');`);
   })
   .then(result => {
     // const row1 = result.recordset[0];
@@ -45,8 +45,55 @@ app.get('/api', (req, res) => {
   res.json({ users: term1a });
 });
 
+app.get('/logindata', (req, res) => {
+  var { message } = req.body;
+  const myoutput = message.split(' ');
+        
+  sql.connect(config)
+  .then(pool => {
+    // console.log('Retrieving from the database');
+    var password;
+    if (myoutput.length > 2) {
+      return pool.request()
+      .query(`INSERT INTO usertable 
+              VALUES (${myoutput[0]}, ${myoutput[1]}, ${myoutput[2]}, ${myoutput[3]}, ${myoutput[4]});
+              INSERT INTO mygrades
+              VALUES (0, 0, 0, ${myoutput[4]}, ${myoutput[0]});`);
+    } else {
+      return pool.request()
+      .query(`SELECT password
+              FROM usertable
+              WHERE username IN (${myoutput[0]});`)      
+      .then(result => {
+        password = result;
+      })
+    }
+      // .query(`CREATE TABLE usertable (
+      //           username varchar(255),
+      //           password varchar(255),
+      //           term int,
+      //           degree varchar(255),
+      //           identification int
+      //         )`);
+  })
+  // .then(result => {
+  //   // const row1 = result.recordset[0];
+  //   term1a = Object.values(result.recordset[0]);
+  // })
+  .catch(err => {
+    console.error('Error connecting to the database:', err);
+  });
+  if (myoutput.length == 2) {
+    if (password == myoutput[1]) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  }
+});
+
 //fetching information from the client, updating sql database
-app.post('/api/send-message', (req, res) => {
+app.post('/userdata/send-message', (req, res) => {
   var { message } = req.body;
 
   if (message) {
