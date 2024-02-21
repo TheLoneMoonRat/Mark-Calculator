@@ -129,4 +129,4 @@ app.post('/userdata/send-message', (req, res) => {
   }
 });
 
-app.listen(5000, () => { console.log("Server started at port 5000") })
+app.listen(process.env.PORT, () => { console.log("Server started on port:", process.env.PORT) })
