@@ -15,7 +15,6 @@ const config = {
   
 const app = express();
 app.use(bodyParser.json());
-var term1a;
 sql.connect(config)
   .then(pool => {
     console.log('Connected to the database');
@@ -26,46 +25,61 @@ sql.connect(config)
   });
 
 //sending information to client from the sql database
-app.get('/userdata', (req, res) => {
-  sql.connect(config)
-  .then(pool => {
-    // console.log('Retrieving from the database');
-    return pool.request()
-      .query(`SELECT mark1, mark2, mark3
-              FROM mygrades
-              WHERE studentid IN ('21023892');`);
-  })
-  .then(result => {
-    // const row1 = result.recordset[0];
-    term1a = Object.values(result.recordset[0]);
-  })
-  .catch(err => {
-    console.error('Error connecting to the database:', err);
-  });
-  res.json({ users: term1a });
+app.post('/userdata', (req, res) => {
+  var { message } = req.body;
+  var term1a;
+  if (message) {
+    sql.connect(config)
+    .then(pool => {
+      // console.log('Retrieving from the database');
+      return pool.request()
+        .query(`SELECT mark1, mark2, mark3
+                FROM mygrades
+                WHERE username IN ('${message}');`);
+    })
+    .then(result => {
+      // const row1 = result.recordset[0];
+      term1a = Object.values(result.recordset[0]);
+    })
+    .catch(err => {
+      console.error('Error connecting to the database:', err);
+    });
+    res.json({ grades: term1a });
+  }
 });
 
-app.get('/logindata', (req, res) => {
+app.post('/logindata', (req, res) => {
+  var password;
   var { message } = req.body;
   const myoutput = message.split(' ');
         
   sql.connect(config)
   .then(pool => {
     // console.log('Retrieving from the database');
-    var password;
     if (myoutput.length > 2) {
       return pool.request()
-      .query(`INSERT INTO usertable 
-              VALUES (${myoutput[0]}, ${myoutput[1]}, ${myoutput[2]}, ${myoutput[3]}, ${myoutput[4]});
-              INSERT INTO mygrades
-              VALUES (0, 0, 0, ${myoutput[4]}, ${myoutput[0]});`);
+      .query(`INSERT INTO usertable (username, password, term, degree, identification)
+              VALUES ('${myoutput[0]}', '${myoutput[1]}', ${myoutput[2]}, '${myoutput[3]}', ${myoutput[4]});
+              INSERT INTO mygrades (mark1, mark2, mark3, studentid, username)
+              VALUES (0, 0, 0, ${myoutput[4]}, '${myoutput[0]}');`);
     } else {
       return pool.request()
       .query(`SELECT password
               FROM usertable
-              WHERE username IN (${myoutput[0]});`)      
+              WHERE username IN ('${myoutput[0]}');`)      
       .then(result => {
-        password = result;
+        if (result.recordset.length > 0) {
+          password = result.recordset[0].password;
+          if (myoutput.length == 2) {
+            if (password == myoutput[1]) {
+              res.json({ success: true });
+            } else {
+              res.json({ success: false });
+            }
+          }
+        } else {
+          console.log('Username not found');
+        }
       })
     }
       // .query(`CREATE TABLE usertable (
@@ -76,20 +90,9 @@ app.get('/logindata', (req, res) => {
       //           identification int
       //         )`);
   })
-  // .then(result => {
-  //   // const row1 = result.recordset[0];
-  //   term1a = Object.values(result.recordset[0]);
-  // })
   .catch(err => {
     console.error('Error connecting to the database:', err);
   });
-  if (myoutput.length == 2) {
-    if (password == myoutput[1]) {
-      res.json(true);
-    } else {
-      res.json(false);
-    }
-  }
 });
 
 //fetching information from the client, updating sql database
@@ -105,15 +108,16 @@ app.post('/userdata/send-message', (req, res) => {
         console.log('Updating the database');
         const rank = message[0];
         message = message.slice(1);
+        message = message.split(' ');
         if (rank == "1") {
           return pool.request()
-            .query(`update mygrades set mark1 = ${message} where studentid = 21023892;`);
+            .query(`update mygrades set mark1 = ${message[0]} where username = '${message[1]}';`);
         } else if (rank == "2") {
           return pool.request()
-            .query(`update mygrades set mark2 = ${message} where studentid = 21023892;`);
+            .query(`update mygrades set mark2 = ${message[0]} where username = '${message[1]}';`);
         } else {
           return pool.request()
-            .query(`update mygrades set mark3 = ${message} where studentid = 21023892;`);
+            .query(`update mygrades set mark3 = ${message[0]} where username = '${message[1]}';`);
         }
       })
       .catch(err => {

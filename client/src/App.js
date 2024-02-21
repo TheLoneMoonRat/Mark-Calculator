@@ -12,28 +12,35 @@ function App () {
   const [degree, setDegree] = useState('');
   const [id, setID] = useState('');
   const [loggedin, login] = useState(false);
-  const [isUser, setuser] = useState(true);
+  const [isUser, setUser] = useState(true);
 
   useEffect(() => {
-    fetch("/userdata").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-      }
-    )
+    if (loggedin) {
+      var message = username;
+      fetch("/userdata", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message }),
+      }).then(response => response.json())
+        .then (data => {
+          setBackendData(data)
+        }
+      )
+    }
   })
 
   const backendwrapper = () => {
-    sendMessageToBackend("1" + message1, '/userdata/send-message');
-    sendMessageToBackend("2" + message2, '/userdata/send-message');
-    sendMessageToBackend("3" + message3, '/userdata/send-message');
+    sendMessageToBackend("1" + message1 + " " + username, '/userdata/send-message');
+    sendMessageToBackend("2" + message2 + " " + username, '/userdata/send-message');
+    sendMessageToBackend("3" + message3 + " " + username, '/userdata/send-message');
   }
 
   const sendAccountData = () => {
     const myoutput = username + ' ' + password + ' ' + term + ' ' + degree + ' ' + id;
     sendMessageToBackend(myoutput, '/logindata');
-    setuser(true);
+    setUser(true);
   }
 
   const sendMessageToBackend = (message, address) => {
@@ -46,7 +53,9 @@ function App () {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Message sent successfully:', data);
+        if (address === "/logindata") {
+          login(data.success);
+        }
       })
       .catch(error => {
         console.error('Error sending message:', error);
@@ -77,27 +86,22 @@ function App () {
             placeholder="Enter your message"
           />
         </div>
-        {(typeof backendData.users === 'undefined') ? (
+        {(typeof backendData.grades === 'undefined') ? (
           <p>loading...</p>
         ): (
-          backendData.users.map((user, i) => (
-            <p key={i}>{user}</p>
+          backendData.grades.map((grade, i) => (
+            <p key={i}>{grade}</p>
           ))
         )}
       </div>
       )
   }
   const changeuser = () => {
-    setuser(false);
+    setUser(false);
   }
   const verifydata = () => {
     const myoutput = username + ' ' + password;
     sendMessageToBackend(myoutput, '/logindata');
-    fetch("/logindata").then(
-      response => response.json()
-    ).then(
-      data => login(data)
-    )
   }
 
   function loginuser () {
