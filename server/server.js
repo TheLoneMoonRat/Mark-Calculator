@@ -40,11 +40,11 @@ app.post('/userdata', (req, res) => {
     .then(result => {
       // const row1 = result.recordset[0];
       term1a = Object.values(result.recordset[0]);
+      res.json({ grades: term1a });
     })
     .catch(err => {
       console.error('Error connecting to the database:', err);
     });
-    res.json({ grades: term1a });
   }
 });
 
