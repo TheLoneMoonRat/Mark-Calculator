@@ -18,7 +18,7 @@ function App () {
   useEffect(() => {
     if (loggedin) {
       var message = username;
-      fetch("/userdata", {
+      fetch("https://backendgradecalc.azurewebsites.net/userdata", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,16 +43,16 @@ function App () {
 
   const backendwrapper = () => {
     if (!hasSpaces(message1) && !hasSpaces(message2) && !hasSpaces(message3) && !hasSpaces(username)) {
-      sendMessageToBackend("1" + message1 + " " + username, '/userdata/send-message');
-      sendMessageToBackend("2" + message2 + " " + username, '/userdata/send-message');
-      sendMessageToBackend("3" + message3 + " " + username, '/userdata/send-message');
+      sendMessageToBackend("1" + message1 + " " + username, 'https://backendgradecalc.azurewebsites.net/userdata/send-message');
+      sendMessageToBackend("2" + message2 + " " + username, 'https://backendgradecalc.azurewebsites.net/userdata/send-message');
+      sendMessageToBackend("3" + message3 + " " + username, 'https://backendgradecalc.azurewebsites.net/userdata/send-message');
     }
   }
 
   const sendAccountData = () => {
     if (!hasSpaces(username) && !hasSpaces(password) && !hasSpaces(term) && !hasSpaces(degree) && !hasSpaces(id)) {
       const myoutput = username + ' ' + password + ' ' + term + ' ' + degree + ' ' + id;
-      sendMessageToBackend(myoutput, '/logindata');
+      sendMessageToBackend(myoutput, 'https://backendgradecalc.azurewebsites.net/logindata');
       setUser(true);
     }
   }
@@ -67,7 +67,7 @@ function App () {
     })
       .then(response => response.json())
       .then(data => {
-        if (address === "/logindata") {
+        if (address === "https://backendgradecalc.azurewebsites.net/logindata") {
           login(data.success);
         }
       })
@@ -117,7 +117,7 @@ function App () {
   const verifydata = () => {
     if (!hasSpaces(username) && !hasSpaces(password)) {
       const myoutput = username + ' ' + password;
-      sendMessageToBackend(myoutput, '/logindata');
+      sendMessageToBackend(myoutput, 'https://backendgradecalc.azurewebsites.net/logindata');
     }
   }
 
