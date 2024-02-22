@@ -3,10 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Grade Calcuator</title>
+    <title>Grade Calculator</title>
 </head>
 <body>
     <div id="root"></div>
-    <script src="./App.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script type="module" src="./App.js"></script>
+    <script>
+        ReactDOM.render(React.createElement(App), document.getElementById('root'));
+    </script>
 </body>
 </html>
