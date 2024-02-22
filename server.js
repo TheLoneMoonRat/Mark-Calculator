@@ -1,6 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser'); // Added for parsing JSON in the request body
+const app = express();
 const sql = require('mssql');
+
+app.use(cors());
+
+const corsOptions = {
+  origin: 'blue-ground-0af911310.4.azurestaticapps.net',
+  // Other CORS options as needed
+};
+
+app.use(cors(corsOptions));
+
 const config = {
   user: 'n62wong',
   password: 'DerpMan100!',
@@ -13,7 +24,6 @@ const config = {
   }
 };
   
-const app = express();
 app.use(bodyParser.json());
 sql.connect(config)
   .then(pool => {
