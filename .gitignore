@@ -2,7 +2,6 @@
 *.cmd
 *.ps1
 *.ts
-*.json
 *.md
 *.txt
 *.md
