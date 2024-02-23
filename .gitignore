@@ -1,5 +1,5 @@
 
-*.cmd
+# *.cmd
 *.ps1
 *.ts
 *.md

@@ -1,118 +1,117 @@
-/* Common Styles */
 body {
-    font-family: 'Arial', sans-serif;
+  font-family: 'Arial', sans-serif;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* Home Page Styles */
 
 .home-header {
-    background-color: #007bff;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
 }
 
 /* Home Page Styles */
 .home {
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    box-sizing: border-box; /* Add this line */
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  box-sizing: border-box; /* Add this line */
 }
 
 .home-main {
-    max-width: 800px;
-    width: 100%; /* Add this line */
-    margin: 20px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+  max-width: 800px;
+  width: 100%; /* Add this line */
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 
 .home-description h2,
 .home-technical-details h2 {
-    color: #007bff;
+  color: #007bff;
 }
 
 .home-description p,
 .home-technical-details p {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .home-footer {
-    background-color: #007bff;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 .footer-links {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .footer-links a {
-    color: #fff;
-    margin: 0 10px;
-    text-decoration: none;
+  color: #fff;
+  margin: 0 10px;
+  text-decoration: none;
 }
 
 .footer-links a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 /* User Page Styles */
 .user-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .user-container button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    margin-top: 10px;
-    cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
 .user-container button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .user-container .container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
 }
 
 .user-container input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  box-sizing: border-box;
 }
 
 .user-container p {
-    margin: 5px 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 5px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .user-container .myheading {
-    color: #007bff;
-    font-size: 20px;
+  color: #007bff;
+  font-size: 20px;
 }
