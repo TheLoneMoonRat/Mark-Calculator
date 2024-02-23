@@ -3,6 +3,16 @@ const bodyParser = require('body-parser'); // Added for parsing JSON in the requ
 const sql = require('mssql');
 app.listen(process.env.PORT, () => { console.log(`Server started at port ${process.env.PORT}`) });
 const cors = require('cors');
+
+const corsOptions = {
+  origin: 'www.markcalc.site',
+  methods: 'POST',
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+
 const config = {
   user: 'n62wong',
   password: 'DerpMan100!',
@@ -16,7 +26,6 @@ const config = {
 };
   
 const app = express();
-app.use(cors());
 app.use(bodyParser.json());
 sql.connect(config)
   .then(pool => {
