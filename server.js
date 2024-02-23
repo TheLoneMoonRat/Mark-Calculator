@@ -4,8 +4,10 @@ const sql = require('mssql');
 app.listen(process.env.PORT, () => { console.log(`Server started at port ${process.env.PORT}`) });
 const cors = require('cors');
 
+const allowedOrigins = ['https://blue-ground-0af911310.4.azurestaticapps.net', 'www.markcalc.site'];
+
 const corsOptions = {
-  origin: 'www.markcalc.site',
+  origin: allowedOrigins,
   methods: 'POST',
   credentials: true,
   optionsSuccessStatus: 204,
