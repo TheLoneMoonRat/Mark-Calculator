@@ -1,10 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser'); // Added for parsing JSON in the request body
 const sql = require('mssql');
-app.listen(process.env.PORT, () => { console.log(`Server started at port ${process.env.PORT}`) });
 const cors = require('cors');
-
-const allowedOrigins = ['https://blue-ground-0af911310.4.azurestaticapps.net', 'www.markcalc.site'];
+const allowedOrigins = ['*'];
 
 const corsOptions = {
   origin: allowedOrigins,
@@ -13,6 +11,7 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 
+const app = express();
 app.use(cors(corsOptions));
 
 const config = {
@@ -27,7 +26,6 @@ const config = {
   }
 };
   
-const app = express();
 app.use(bodyParser.json());
 sql.connect(config)
   .then(pool => {
@@ -143,4 +141,4 @@ app.post('/userdata/send-message', (req, res) => {
   }
 });
 
-app.listen(5000, () => { console.log("Server started at port 5000") })
+app.listen(process.env.PORT, () => { console.log(`Server started at port ${process.env.PORT}`) });
