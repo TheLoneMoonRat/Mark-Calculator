@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser'); // Added for parsing JSON in the request body
 const sql = require('mssql');
+app.listen(process.env.PORT, () => { console.log(`Server started at port ${process.env.PORT}`) });
+const cors = require('cors');
 const config = {
   user: 'n62wong',
   password: 'DerpMan100!',
@@ -14,6 +16,7 @@ const config = {
 };
   
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 sql.connect(config)
   .then(pool => {
